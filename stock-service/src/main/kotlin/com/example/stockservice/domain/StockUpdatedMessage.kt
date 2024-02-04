@@ -6,6 +6,8 @@ data class StockUpdatedMessage(
     data class ProductOption(
         val id: Long,
         val quantity: Int,
+        val productId: Long,
+        val productOptionGroupId: Long,
     )
 
     companion object {
@@ -14,6 +16,8 @@ data class StockUpdatedMessage(
                 ProductOption(
                     id = it.productOptionId,
                     quantity = it.quantity,
+                    productId = it.productId,
+                    productOptionGroupId = it.productOptionGroupId,
                 )
             }
             return StockUpdatedMessage(

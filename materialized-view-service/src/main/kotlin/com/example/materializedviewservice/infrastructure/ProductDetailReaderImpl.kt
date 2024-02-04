@@ -12,4 +12,8 @@ class ProductDetailReaderImpl(
     override fun findById(id: Long): Optional<ProductDetail> {
         return productDetailRepository.findById(id)
     }
+
+    override fun findAllById(ids: List<Long>): List<ProductDetail> {
+        return productDetailRepository.findAllById(ids)
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.stockservice.entrypoint
+package com.example.stockservice.entrypoint.rest
 
 import com.example.stockservice.domain.StockInfo
 import com.example.stockservice.domain.UpdateStockCommand
@@ -25,9 +25,9 @@ class StockController(
         return ResponseEntity(HttpStatus.OK)
     }
 
-    @GetMapping("stocks")
-    fun getStocks(@RequestParam productOptionIds: List<Long>): ResponseEntity<List<StockInfo>> {
-        val stockInfos = stockService.getStocks(productOptionIds)
-        return ResponseEntity(stockInfos, HttpStatus.OK)
-    }
+    //@GetMapping("stocks")
+    //fun getStocks(@RequestParam productOptionIds: List<Long>): ResponseEntity<List<StockInfo>> {
+    //    val stockInfos = stockService.getStocks(productOptionIds)
+    //    return ResponseEntity(stockInfos, HttpStatus.OK)
+    //}
 }

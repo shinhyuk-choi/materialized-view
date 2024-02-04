@@ -11,4 +11,8 @@ class ProductDetailStoreImpl(
     override fun save(productDetail: ProductDetail): ProductDetail {
         return productDetailRepository.save(productDetail)
     }
+
+    override fun saveAll(productDetails: List<ProductDetail>): List<ProductDetail> {
+        return productDetailRepository.saveAll(productDetails)
+    }
 }

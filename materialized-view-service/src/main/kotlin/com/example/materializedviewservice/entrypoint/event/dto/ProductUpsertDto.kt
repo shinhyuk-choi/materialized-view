@@ -1,4 +1,4 @@
-package com.example.materializedviewservice.domain.dto
+package com.example.materializedviewservice.entrypoint.event.dto
 
 import com.example.materializedviewservice.domain.ProductOptionGroup
 import com.fasterxml.jackson.annotation.JsonProperty

@@ -1,7 +1,7 @@
 package com.example.materializedviewservice.domain
 
 import com.example.common.BaseEntity
-import com.example.materializedviewservice.domain.dto.ProductUpsertDto
+import com.example.materializedviewservice.entrypoint.event.dto.ProductUpsertDto
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
@@ -20,7 +20,6 @@ class ProductDetail constructor(
     @JdbcTypeCode(SqlTypes.JSON)
     var productOptionGroups: MutableList<ProductOptionGroup> = mutableListOf()
 ) : BaseEntity() {
-
 
     fun update(dto: ProductUpsertDto) {
         this.name = dto.name

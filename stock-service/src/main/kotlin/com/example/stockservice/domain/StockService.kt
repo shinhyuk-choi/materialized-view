@@ -14,7 +14,7 @@ class StockService(
     fun updateStocks(command: UpdateStockCommand) {
         val productOptionIds = command.productOptions.map { it.id }
         val stocksExists = stockReader.findAllByProductOptionIdIn(productOptionIds)
-        val stocksCreated: MutableList<Stock> = generateNotExistsStocks(stocksExists, productOptionIds)
+        val stocksCreated: MutableList<Stock> = generateNotExistsStocks(stocksExists, command)
         val stocks: List<Stock> = (stocksExists + stocksCreated)
         val productOptionIdToChangeQuantityMap = command.productOptions.associateBy { it.id }
         stocks.forEach {
@@ -28,25 +28,28 @@ class StockService(
         )
     }
 
-    @Transactional
-    fun getStocks(productOptionIds: List<Long>): List<StockInfo> {
-        val stocksExists = stockReader.findAllByProductOptionIdIn(productOptionIds)
-        val stocksCreated: MutableList<Stock> = generateNotExistsStocks(stocksExists, productOptionIds)
-        val stockInfos: List<StockInfo> = (stocksExists + stocksCreated)
-            .map { StockInfo(it.productOptionId, it.quantity) }
-        return stockInfos
-
-    }
+    //@Transactional
+    //fun getStocks(productOptionIds: List<Long>): List<StockInfo> {
+    //    val stocksExists = stockReader.findAllByProductOptionIdIn(productOptionIds)
+    //    val stocksCreated: MutableList<Stock> = generateNotExistsStocks(stocksExists, productOptionIds)
+    //    val stockInfos: List<StockInfo> = (stocksExists + stocksCreated)
+    //        .map { StockInfo(it.productOptionId, it.quantity) }
+    //    return stockInfos
+    //
+    //}
 
     private fun generateNotExistsStocks(
         stocks: List<Stock>,
-        productOptionIds: List<Long>
+        command: UpdateStockCommand
     ): MutableList<Stock> {
         val productOptionIdsOfStocks: HashSet<Long> = stocks.map { it.productOptionId }.toHashSet()
         val stocksToCreate: MutableList<Stock> = mutableListOf()
-        for (productOptionId in productOptionIds) {
-            if (!productOptionIdsOfStocks.contains(productOptionId)) {
-                stocksToCreate.add(Stock(productOptionId = productOptionId, quantity = 0))
+        for (productOption in command.productOptions) {
+            if (!productOptionIdsOfStocks.contains(productOption.id)) {
+                stocksToCreate.add(Stock(
+                    productOptionId = productOption.id, quantity = 0, productId = productOption.productId,
+                    productOptionGroupId = productOption.productOptionGroupId
+                ))
             }
         }
         return stocksToCreate

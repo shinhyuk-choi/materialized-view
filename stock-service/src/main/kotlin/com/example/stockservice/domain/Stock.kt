@@ -1,8 +1,6 @@
 package com.example.stockservice.domain
 
 import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 
@@ -12,19 +10,23 @@ class Stock constructor(
     var quantity: Int,
     @Id
     val productOptionId: Long,
+    val productId: Long,
+    val productOptionGroupId: Long,
 ) {
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //val id: Long = 0L
+
 
     companion object {
         fun generate(
             quantity: Int,
             productOptionId: Long,
+            productId: Long,
+            productOptionGroupId: Long,
         ): Stock {
             return Stock(
                 quantity = quantity,
                 productOptionId = productOptionId,
+                productId = productId,
+                productOptionGroupId = productOptionGroupId,
             )
         }
     }

@@ -1,7 +1,8 @@
-package com.example.materializedviewservice.domain
+package com.example.materializedviewservice.entrypoint.event
 
 
-import com.example.materializedviewservice.domain.dto.ProductUpsertDto
+import com.example.materializedviewservice.domain.ProductDetailService
+import com.example.materializedviewservice.entrypoint.event.dto.ProductUpsertDto
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper

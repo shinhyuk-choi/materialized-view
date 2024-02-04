@@ -6,5 +6,7 @@ data class UpdateStockCommand(
     data class ProductOption(
         val id: Long,
         val changeQuantity: Int,
+        val productId: Long,
+        val productOptionGroupId: Long,
     )
 }

@@ -1,6 +1,7 @@
 package com.example.materializedviewservice.domain
 
-import com.example.materializedviewservice.domain.dto.ProductUpsertDto
+import com.example.materializedviewservice.entrypoint.event.dto.ProductUpsertDto
+import com.example.materializedviewservice.entrypoint.event.dto.StockUpdateDto
 import org.springframework.stereotype.Service
 
 @Service
@@ -17,5 +18,17 @@ class ProductDetailService(
             productDetailStore.save(productDetail)
         }
 
+    }
+
+    fun updateStock(dto: StockUpdateDto) {
+        val productIds = dto.productOptions.map { it.productId }
+        val productDetails = productDetailReader.findAllById(productIds)
+        val productOptions = productDetails.flatMap { it.productOptionGroups }.flatMap { it.productOptions }
+        val productOptionIdToProductOption = productOptions.associateBy { it.id }
+        for (dtoProductOption in dto.productOptions) {
+            val productOption = productOptionIdToProductOption[dtoProductOption.id] ?: continue
+            productOption.quantity = dtoProductOption.quantity
+        }
+        productDetailStore.saveAll(productDetails)
     }
 }
